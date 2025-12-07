@@ -7,7 +7,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +32,11 @@ export default function LoginPage() {
         return;
       }
 
+      // data.user should contain { id, username, role }
       login(data.token, data.user);
-      router.push("/"); // redirect to homepage
+      router.push("/"); // Go to Home after login
     } catch (err) {
+      console.error(err);
       setError("Server error");
     }
   };
@@ -47,10 +49,10 @@ export default function LoginPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={form.username}
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
           onChange={handleChange}
           className="w-full p-2 rounded bg-black text-white border border-gray-600"
           required
