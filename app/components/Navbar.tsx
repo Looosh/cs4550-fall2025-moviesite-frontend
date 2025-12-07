@@ -6,7 +6,8 @@ export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-    <nav className="bg-[--color-navbar] px-6 py-4 flex justify-between items-center">
+   <nav className="bg-black border-b border-[var(--color-primary)] px-6 py-4 flex justify-between items-center">
+
       <Link href="/" className="text-[--color-primary] font-bold text-2xl">
         MovieHub
       </Link>
