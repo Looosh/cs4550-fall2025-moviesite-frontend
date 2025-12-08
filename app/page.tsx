@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./components/AuthProvider";
 import Link from "next/link";
+import Footer from "./components/Footer";
 
 interface Movie {
   _id: string;
@@ -114,6 +115,8 @@ export default function HomePage() {
     </div>
   )}
 </section>
+
+<Footer />
 
     </div>
   );
