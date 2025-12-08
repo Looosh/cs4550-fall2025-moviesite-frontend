@@ -9,11 +9,14 @@ export default function RegisterPage() {
     username: "",
     email: "",
     password: "",
+    role: "viewer", // default role
   });
 
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -25,7 +28,7 @@ export default function RegisterPage() {
       const response = await fetch("http://localhost:4000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(form), // includes role 
       });
 
       const data = await response.json();
@@ -35,7 +38,7 @@ export default function RegisterPage() {
         return;
       }
 
-      router.push("/login"); // Redirect to login after success
+      router.push("/login"); // redirect after success 
     } catch (err) {
       setError("Server error");
     }
@@ -57,7 +60,7 @@ export default function RegisterPage() {
           className="w-full p-2 rounded bg-black text-white border border-gray-600"
           required
         />
-        
+
         <input
           type="email"
           name="email"
@@ -77,6 +80,21 @@ export default function RegisterPage() {
           className="w-full p-2 rounded bg-black text-white border border-gray-600"
           required
         />
+
+        {/* Role Selection */}
+        <div>
+          <label className="block text-sm text-gray-400 mb-1">Select Role</label>
+          <select
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+            className="w-full p-2 rounded bg-black text-white border border-gray-600"
+          >
+            <option value="viewer">Viewer</option>
+            <option value="critic">Critic</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
 
         {error && (
           <p className="text-red-400 text-sm text-center">{error}</p>

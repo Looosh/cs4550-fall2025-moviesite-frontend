@@ -17,7 +17,10 @@ interface Review {
   _id: string;
   rating: number;
   comment: string;
-  user: { username: string };
+  user?: {
+    _id: string;
+    username: string;
+  };
 }
 
 export default function MovieDetailsPage() {
@@ -120,9 +123,14 @@ export default function MovieDetailsPage() {
           <div className="space-y-3">
             {reviews.map((rev) => (
               <div key={rev._id} className="bg-[--color-card] p-3 rounded">
-                <p className="font-semibold">
-                  {rev.user?.username || "Unknown User"}
-                </p>
+
+                <Link
+                href={`/profile/${rev.user?._id}`}
+                    className="font-semibold hover:text-[--color-primary] cursor-pointer"
+                    >
+                    {rev.user?.username || "Unknown User"}
+                </Link>
+
                 <p className="text-yellow-400">⭐ {rev.rating}</p>
                 <p className="text-gray-300">{rev.comment}</p>
               </div>
