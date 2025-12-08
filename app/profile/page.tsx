@@ -82,20 +82,45 @@ export default function ProfilePage() {
       {/* Reviews Section */}
       <section>
         <h2 className="text-2xl font-bold mb-3">My Reviews</h2>
+
         {reviews.length === 0 ? (
-          <p>You haven't written any reviews yet.</p>
+            <p className="text-gray-400">You haven't written any reviews yet.</p>
         ) : (
-          <div className="space-y-4">
+            <div className="space-y-4">
             {reviews.map((rev) => (
-              <div key={rev._id} className="bg-[--color-card] p-4 rounded-lg">
-                <p className="text-lg font-semibold">{rev.movie?.title}</p>
-                <p className="text-yellow-400">⭐ {rev.rating}</p>
-                <p className="text-gray-300">{rev.comment}</p>
-              </div>
+                <div
+                key={rev._id}
+                className="bg-[--color-card] p-4 rounded-lg flex justify-between items-start"
+                >
+                <div>
+                    <p className="text-lg font-semibold">{rev.movie?.title}</p>
+                    <p className="text-yellow-400">⭐ {rev.rating}</p>
+                    <p className="text-gray-300">{rev.comment}</p>
+                </div>
+
+                {/* Delete Button */}
+                <button
+                    onClick={async () => {
+                    await fetch(`http://localhost:4000/reviews/${rev._id}`, {
+                        method: "DELETE",
+                        headers: {
+                        Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    // Immediately remove from UI
+                    setReviews((prev) => prev.filter((r) => r._id !== rev._id));
+                    }}
+                    className="text-red-400 hover:text-red-600 text-xl px-2"
+                    title="Delete Review"
+                >
+                    ✖
+                </button>
+            </div>
             ))}
-          </div>
+        </div>
         )}
-      </section>
+    </section>
     </div>
   );
 }

@@ -6,8 +6,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-   <nav className="bg-black border-b border-[var(--color-primary)] px-6 py-4 flex justify-between items-center">
-
+    <nav className="bg-black border-b border-[var(--color-primary)] px-6 py-4 flex justify-between items-center">
       <Link href="/" className="text-[--color-primary] font-bold text-2xl">
         MovieHub
       </Link>
@@ -19,9 +18,17 @@ export default function Navbar() {
 
         {user ? (
           <>
+            {/* Admin-only link */}
+            {user.role === "admin" && (
+              <Link href="/admin" className="hover:text-[--color-primary]">
+                Admin
+              </Link>
+            )}
+
             <Link href="/profile" className="hover:text-[--color-primary]">
               Profile
             </Link>
+
             <button
               className="hover:text-[--color-primary]"
               onClick={logout}
